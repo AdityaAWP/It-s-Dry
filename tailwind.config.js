@@ -8,7 +8,8 @@ export default {
         condensed: ["'Roboto Condensed'", "sans-serif"],
       },
       colors: {
-        primary: "#AA8B56",
+        primary: "#CCBDAA",
+        second: "#FAF9F0",
         accent: "#4E6C50",
       },
     },

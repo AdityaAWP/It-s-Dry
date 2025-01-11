@@ -1,13 +1,13 @@
-import React from 'react'
-import Navbar from './template/Navbar'
-import HomePage from './pages/HomePage'
+import React from "react";
+import Navbar from "./template/Navbar";
+import LandingPage from "./pages/home/LandingPage";
 
 const App = () => {
   return (
     <div>
-      <HomePage/>
+      <LandingPage />
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
