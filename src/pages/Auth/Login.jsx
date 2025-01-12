@@ -4,7 +4,7 @@ import Logo from "../../assets/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { login } from "../../redux/slice/authSlice";
+import { login } from "../../redux/slice/authSlice.js";
 import { useState } from "react";
 
 const Login = () => {

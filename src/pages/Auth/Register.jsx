@@ -4,7 +4,7 @@ import Layout from "../../layouts/Layout";
 import Logo from "../../assets/logo.png";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { register } from "../../redux/slice/authSlice";
+import { register } from "../../redux/slice/authSlice.js";
 
 const Register = () => {
   const dispatch = useDispatch();
