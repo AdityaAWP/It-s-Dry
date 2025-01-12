@@ -1,52 +1,93 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../../layouts/Layout";
-import Hero from "../../assets/hero.jpeg";
+import axiosInstance from "../../helper/apiHelper";
+import { Link } from "react-router-dom";
+
 const ArticlePage = () => {
-  const news = [
-    {
-      image: Hero,
-      title: "This is What Will Happen",
-      description: "sasaisasiasiasnmaisnansiasinanisasa....",
-    },
-    {
-      image: Hero,
-      title: "This is What Will Happen",
-      description: "sasaisasiasiasnmaisnansiasinanisasa....",
-    },
-    {
-      image: Hero,
-      title: "This is What Will Happen",
-      description: "sasaisasiasiasnmaisnansiasinanisasa....",
-    },
-  ];
+  const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const fetchArticles = async () => {
+    try {
+      setLoading(true);
+      const response = await axiosInstance.get("/articles");
+      setArticles(response.data.data);
+    } catch (error) {
+      console.error("Error fetching articles:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchArticles();
+  }, []);
+
+  const filteredArticles = articles.filter((article) =>
+    article.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  if (loading) {
+    return (
+      <Layout>
+        <div className="min-h-screen bg-primary flex justify-center items-center">
+          <p className="text-2xl">Loading...</p>
+        </div>
+      </Layout>
+    );
+  }
+
   return (
     <Layout>
-      <div className="h-screen bg-primary flex flex-col justify-center items-center">
-        <p className="text-4xl font-condensed font-bold uppercase">
-          Our Article :{" "}
-        </p>
-        <hr className="border-black" />
-        <div className="flex md:flex-row w-full flex-col justify-evenly items-center mt-10">
-          {news.map((item, key) => (
-            <div className="relative flex md:flex-col flex-row justify-between items-center md:mx-0 mx-10 md:my-6 my-3 bg-second shadow-sm border border-slate-200 rounded-lg md:w-96 md:h-96 h-44">
-              <div className="relative md:h-56 m-2.5 overflow-hidden text-white rounded-md">
-                <img src={item.image} alt="card-image" />
+      <div className="min-h-screen pt-44 bg-primary p-8">
+        <h1 className="text-center font-condensed uppercase font-bold text-4xl mb-11">
+          Our Article
+        </h1>
+
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-8">
+            <input
+              type="text"
+              placeholder="Search articles..."
+              className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:border-accent"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {filteredArticles.map((article, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-lg shadow-lg overflow-hidden"
+              >
+                <img
+                  src={`http://127.0.0.1:8000/storage/${article.photo}`}
+                  alt={article.title}
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-6">
+                  <h2 className="text-xl font-bold mb-2">{article.title}</h2>
+                  <div className="flex justify-between items-center mt-4">
+                    <span className="text-sm text-gray-500">
+                      By {article.author || "Unknown"}
+                    </span>
+                    <Link to={`/article/${article.id}`}>
+                      <button className="bg-accent text-white px-4 py-2 rounded hover:bg-opacity-90 transition-colors">
+                        Read More
+                      </button>
+                    </Link>
+                  </div>
+                </div>
               </div>
-              <div className="p-4 md:w-full w-1/2 pr-5">
-                <h6 className="mb-2 text-slate-800 md:text-xl text-sm font-semibold">
-                  {item.title}
-                </h6>
-                <p className="text-slate-600 md:block hidden leading-normal font-light">
-                  {item.description}
-                </p>
-              </div>
-              <div className="px-4 pb-4 pt-0 mt-2">
-                <button className="rounded-md bg-accent py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg hover:bg-slate-700">
-                  more
-                </button>
-              </div>
+            ))}
+          </div>
+
+          {filteredArticles.length === 0 && (
+            <div className="text-center py-8">
+              <p className="text-xl text-gray-600">No articles found</p>
             </div>
-          ))}
+          )}
         </div>
       </div>
     </Layout>
