@@ -32,6 +32,9 @@ importers:
       sweetalert2:
         specifier: ^11.15.10
         version: 11.15.10
+      uas:
+        specifier: 'file:'
+        version: file:(@types/react@18.3.18)(redux@5.0.1)
     devDependencies:
       '@eslint/js':
         specifier: ^9.17.0
@@ -1708,6 +1711,9 @@ packages:
   typed-array-length@1.0.7:
     resolution: {integrity: sha512-3KS2b+kL7fsuk/eJZ7EQdnEmQoaho/r6KUef7hxvltNA5DR8NAUM+8wJMbJyZ4G9/7i3v5zPBIMN5aybAh2/Jg==}
     engines: {node: '>= 0.4'}
+
+  'uas@file:':
+    resolution: {directory: '', type: directory}
 
   unbox-primitive@1.1.0:
     resolution: {integrity: sha512-nWJ91DjeOkej/TA8pXQ3myruKpKEYgqvpw9lz4OPHj/NWFNluYrjbz9j01CJ8yKQd2g4jFoOkINCTW2I5LEEyw==}
@@ -3621,6 +3627,21 @@ snapshots:
       is-typed-array: 1.1.15
       possible-typed-array-names: 1.0.0
       reflect.getprototypeof: 1.0.10
+
+  uas@file:(@types/react@18.3.18)(redux@5.0.1):
+    dependencies:
+      '@reduxjs/toolkit': 2.5.0(react-redux@9.2.0(@types/react@18.3.18)(react@18.3.1)(redux@5.0.1))(react@18.3.1)
+      axios: 1.7.9
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      react-icons: 5.4.0(react@18.3.1)
+      react-redux: 9.2.0(@types/react@18.3.18)(react@18.3.1)(redux@5.0.1)
+      react-router-dom: 7.1.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      sweetalert2: 11.15.10
+    transitivePeerDependencies:
+      - '@types/react'
+      - debug
+      - redux
 
   unbox-primitive@1.1.0:
     dependencies:
